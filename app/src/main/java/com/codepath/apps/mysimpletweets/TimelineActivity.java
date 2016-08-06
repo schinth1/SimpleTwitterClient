@@ -1,8 +1,12 @@
 package com.codepath.apps.mysimpletweets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -102,40 +106,40 @@ public class TimelineActivity extends AppCompatActivity {
 //    }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.timeline, menu);
-//
-//        MenuItem tweetItem = (MenuItem) menu.findItem(R.id.mnuTweet);
-//        tweetItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-//                startActivityForResult(i, TWEET_REQUEST_CODE);
-//                return true;
-//            }
-//        });
-//        return true;
-//    }
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == TWEET_RESPONSE_CODE && requestCode == TWEET_REQUEST_CODE) {
-//            //Post and Get Updated Timeline
-//            String tweet = data.getExtras().getString("tweet");
-//            client.postUpdate(tweet, new JsonHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                    Log.i("TWEET", response.toString());
-//                    tweets.add(0, Tweet.fromJSON(response));
-//                    aTweets.notifyDataSetChanged();
-//                }
-//
-//                @Override
-//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                    Log.i(TAG, responseString);
-//                }
-//            });
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.timeline, menu);
+
+        MenuItem tweetItem = (MenuItem) menu.findItem(R.id.mnuTweet);
+        tweetItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivityForResult(i, TWEET_REQUEST_CODE);
+                return true;
+            }
+        });
+        return true;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == TWEET_RESPONSE_CODE && requestCode == TWEET_REQUEST_CODE) {
+            //Post and Get Updated Timeline
+            String tweet = data.getExtras().getString("tweet");
+            client.postUpdate(tweet, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.i("TWEET", response.toString());
+                    tweets.add(0, Tweet.fromJSON(response));
+                    aTweets.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.i(TAG, responseString);
+                }
+            });
+        }
+    }
 }

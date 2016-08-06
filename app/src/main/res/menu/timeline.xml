@@ -7,6 +7,7 @@
         android:id="@+id/mnuTweet"
         android:orderInCategory="0"
         android:title="@string/menu_tweet"
+        android:icon="@drawable/ic_tweet"
         app:showAsAction="ifRoom" />
 </menu>
     <!--android:icon="@drawable/ic_tweet"-->
